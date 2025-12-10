@@ -1,13 +1,3 @@
-"""
-add_urls_to_db.py
-
-Reads a list of product URLs from a text file (e.g., 'links.txt') and
-inserts them into the 'products' table in the SQLite database.
-
-It uses 'INSERT OR IGNORE' to safely skip any URLs that already exist
-in the database, preventing duplicates and errors.
-"""
-
 import sqlite3
 import sys
 from pathlib import Path
@@ -37,7 +27,7 @@ def add_urls_to_database():
     # Connect to the SQLite database
     conn = sqlite3.connect(DB_FILE)
     cursor = conn.cursor()
-
+    cursor.execute("DELETE FROM products")  # Optional: Clear existing entries
     # Insert URLs. 'INSERT OR IGNORE' prevents errors if a URL (PRIMARY KEY) already exists.
     added_count = 0
     for url in urls:

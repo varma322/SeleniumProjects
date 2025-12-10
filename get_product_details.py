@@ -1,17 +1,3 @@
-"""
-get_product_details.py
-
-Reads product URLs from a local SQLite database, scrapes product details concurrently
-using multiple incognito browser windows with varied user agents, saves results back
-to the database, and finally exports all data to a CSV file.
-
-Notes:
-- To add URLs, use a DB browser to add links to the 'products' table or
-  create a separate script.
-- Amazon changes HTML over time; this script tries multiple selectors commonly seen.
-- Use responsibly. Amazon may block aggressive scraping; don't hammer their servers.
-"""
-
 import time
 import random
 import csv
@@ -295,6 +281,7 @@ def process_url(url, worker_id):
         update_db_record(result)
         print(f"  -> [Worker-{worker_id}] Name: {result['product_name'][:70]}")
         print(f"  -> [Worker-{worker_id}] Price: {result['Price']}")
+        print(f"  -> [Worker-{worker_id}] Discount: {result['discount']}")
         if result.get("error"):
             print(f"  -> [Worker-{worker_id}] Error: {result['error']}")
     except Exception as e:
